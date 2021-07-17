@@ -2,5 +2,5 @@
 
 int main(int argc, char **argv)
 {
-    return system("git status");
+    return system("git rev-parse --abbrev-ref HEAD");
 }
