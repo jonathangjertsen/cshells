@@ -51,6 +51,7 @@ int main(int argc, char **argv)
 {
     FILE *fp = popen("git status --porcelain", "r");
     line_buffer line;
+    bool have_something_to_commit = false;
     while (fgets(line, sizeof(line), fp) != NULL)
     {
         // Get status
@@ -79,18 +80,21 @@ int main(int argc, char **argv)
                 handled = true;
                 break;
             case CHAR2('M', ' '):
+            case CHAR2('M', '\0'):
                 printf("%s -- Modified.\n", filename);
                 break;
             case CHAR2('A', 'M'):
                 printf("%s -- Added, modified.\n", filename);
                 break;
             default:
-                printf("%s -- I don't know this status: (%d, %d), statuscode %d\n", filename, status[0], status[1], status_code);
+                printf("%s -- I don't know this status: (%d, %d), statuscode %d, status='%s'\n", filename, status[0], status[1], status_code, status);
                 break;
         }
 
         while (!handled)
         {
+            have_something_to_commit = true;
+
             // Prompt for next action
             printf("%s -- [A]dd, [L]ook, [S]kip, abor[T], goto [M]essage | ", filename);
 
@@ -144,7 +148,14 @@ int main(int argc, char **argv)
     }
 
 message_writing_part:
-    make_message();
+    if (have_something_to_commit)
+    {
+        make_message();
+    }
+    else
+    {
+        printf("Nothing to commit.\n");
+    }
 
 cleanup:
     pclose(fp);
