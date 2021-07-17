@@ -25,6 +25,28 @@ void trim_trailing_whitespace(char *string)
     }
 }
 
+void diff(char *filename)
+{
+    printf(
+        "git diff:\n"
+        "---------\n"
+    );
+    line_buffer command = {};
+    snprintf(command, sizeof(command), "git diff -- \"%s\"", filename);
+    system(command);
+    printf(
+        "---------\n"
+        "\n"
+        "git diff --cached:\n"
+        "------------------\n"
+    );
+    snprintf(command, sizeof(command), "git diff --cached -- \"%s\"", filename);
+    system(command);
+    printf(
+        "------------------\n"
+    );
+}
+
 void make_message(void)
 {
     printf(
@@ -34,11 +56,19 @@ void make_message(void)
     system("git status");
     printf(
         "-----------\n"
-        "Commit message > "
+        "Commit message [leave empty to skip] > "
     );
 
     line_buffer message = {};
     fgets(message, sizeof(message), stdin);
+
+    trim_trailing_whitespace(message);
+    if (message[0] == '\0')
+    {
+        printf("OK, skipping commit\n");
+        return;
+    }
+
     line_buffer command = {};
     snprintf(command, sizeof(command), "git commit -m \"%s\"", message);
     if (system(command))
@@ -51,7 +81,7 @@ int main(int argc, char **argv)
 {
     FILE *fp = popen("git status --porcelain", "r");
     line_buffer line;
-    bool have_something_to_commit = false;
+    bool might_have_something_to_commit = false;
     while (fgets(line, sizeof(line), fp) != NULL)
     {
         // Get status
@@ -81,10 +111,10 @@ int main(int argc, char **argv)
                 break;
             case CHAR2('M', ' '):
             case CHAR2('M', '\0'):
-                printf("%s -- Modified.\n", filename);
-                break;
+            case CHAR2('M', 'M'):
             case CHAR2('A', 'M'):
-                printf("%s -- Added, modified.\n", filename);
+            case CHAR2('?', '?'):
+                printf("%s -- Modified.\n", filename);
                 break;
             default:
                 printf("%s -- I don't know this status: (%d, %d), statuscode %d, status='%s'\n", filename, status[0], status[1], status_code, status);
@@ -93,10 +123,10 @@ int main(int argc, char **argv)
 
         while (!handled)
         {
-            have_something_to_commit = true;
+            might_have_something_to_commit = true;
 
             // Prompt for next action
-            printf("%s -- [A]dd, [L]ook, [S]kip, abor[T], goto [M]essage | ", filename);
+            printf("%s -- [A]dd, [P]atch, [D]iff, [S]kip, abor[T], [M]essage | ", filename);
 
             // Read action
             line_buffer user_input = {};
@@ -116,16 +146,23 @@ int main(int argc, char **argv)
                     handled = true;
                 }
                     break;
-                case 'l':
-                case 'L':
+                case 'p':
+                case 'P':
                 {
                     line_buffer command = {};
-                    snprintf(command, sizeof(command), "git diff %s", filename);
+                    snprintf(command, sizeof(command), "git add --patch %s", filename);
                     if (system(command))
                     {
                         printf("Sorry, that didn't work. Skipping\n");
                     }
                     handled = true;
+                }
+                    break;
+                case 'd':
+                case 'D':
+                {
+                    diff(filename);
+                    handled = false;
                 }
                     break;
                 case 'm':
@@ -148,7 +185,7 @@ int main(int argc, char **argv)
     }
 
 message_writing_part:
-    if (have_something_to_commit)
+    if (might_have_something_to_commit)
     {
         make_message();
     }
