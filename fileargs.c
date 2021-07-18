@@ -12,12 +12,6 @@
 
 const char USAGE[] = "Usage: fileargs <argfile> <command> [<extra_args>] [--after] [-v,--verbose]\n\n";
 
-void add_arg(char *args, char *new_arg)
-{
-    strcat(args, new_arg);
-    strcat(args, " ");
-}
-
 int main(int argc, char **argv)
 {
     for (int i = 0; i < argc; i++)

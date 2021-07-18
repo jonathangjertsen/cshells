@@ -50,4 +50,10 @@ static inline int head(char *command, int max_n_lines)
     }
 }
 
+static inline void add_arg(char *args, char *new_arg)
+{
+    strcat(args, new_arg);
+    strcat(args, " ");
+}
+
 #endif
