@@ -1,6 +1,7 @@
 -Werror 
 -Wall
 -Wno-error=unused-variable
+-Wno-unused-result
 -Os
 -s
 -ffunction-sections

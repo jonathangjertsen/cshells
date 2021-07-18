@@ -13,4 +13,6 @@ call build\fileargs fileargs_gcc.txt gcc nav.c      -o build\nav.exe            
 call build\fileargs fileargs_gcc.txt gcc proclist.c -o build\proclist.exe           &&^
 call cp windows/* build                                                             &&^
 call cp build/exec.bat build/e.bat                                                  &&^
+call cp linux/* build                                                               &&^
+call cp linux/exec.sh linux/e.sh                                                    &&^
 echo Done.

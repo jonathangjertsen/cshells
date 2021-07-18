@@ -37,7 +37,7 @@ static inline int head(char *command, int max_n_lines)
         line_buffer line = {};
         while (fgets(line, sizeof(line), fp))
         {
-            printf(line);
+            puts(line);
             n_lines++;
             if (n_lines >= max_n_lines)
             {
