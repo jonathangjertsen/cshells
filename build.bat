@@ -10,6 +10,7 @@ call build\fileargs fileargs_gcc.txt gcc hist.c     -o build\hist.exe           
 call build\fileargs fileargs_gcc.txt gcc log.c      -o build\log.exe                &&^
 call build\fileargs fileargs_gcc.txt gcc ref.c      -o build\ref.exe                &&^
 call build\fileargs fileargs_gcc.txt gcc nav.c      -o build\nav.exe                &&^
+call build\fileargs fileargs_gcc.txt gcc proclist.c -o build\proclist.exe           &&^
 call cp windows/* build                                                             &&^
 call cp build/exec.bat build/e.bat                                                  &&^
 echo Done.

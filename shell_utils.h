@@ -7,6 +7,9 @@
 
 #define MAX_LINE_SIZE 2048
 
+#define MEMBER_SIZE(x) (sizeof(x[0]))
+#define ARRAY_SIZE(x) (sizeof(x)/MEMBER_SIZE(x))
+
 typedef char line_buffer[MAX_LINE_SIZE];
 
 static inline void trim_trailing_whitespace(char *string)

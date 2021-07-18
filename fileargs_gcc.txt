@@ -1,5 +1,6 @@
 -Werror 
 -Wall
+-Wno-error=unused-variable
 -Os
 -s
 -ffunction-sections
