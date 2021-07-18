@@ -1,4 +1,4 @@
-#include <stdlib.h>
+#include <stdio.h>
 
 #ifdef _WIN32
     #define HISTORY "doskey /history"
@@ -8,5 +8,5 @@
 
 int main(int argc, char **argv)
 {
-    return system(HISTORY);
+    return puts(HISTORY);
 }
