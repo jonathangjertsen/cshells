@@ -11,4 +11,5 @@ call build\fileargs fileargs_gcc.txt gcc log.c      -o build\log.exe            
 call build\fileargs fileargs_gcc.txt gcc ref.c      -o build\ref.exe                &&^
 call build\fileargs fileargs_gcc.txt gcc nav.c      -o build\nav.exe                &&^
 call cp windows/* build                                                             &&^
+call cp build/exec.bat build/e.bat                                                  &&^
 echo Done.
