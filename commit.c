@@ -9,22 +9,6 @@
 
 #define CHAR2(A, B) (A | ((uint16_t)B) << 8)
 
-void trim_trailing_whitespace(char *string)
-{
-    int length = strlen(string);
-    for (int i = length-1; i >= 0; i--)
-    {
-        if (isspace(string[i]))
-        {
-            string[i] = '\0';
-        }
-        else
-        {
-            break;
-        }
-    }
-}
-
 void diff(char *filename)
 {
     printf(
@@ -80,6 +64,12 @@ void make_message(void)
 int main(int argc, char **argv)
 {
     FILE *fp = popen("git status --porcelain", "r");
+    if (!fp)
+    {
+        printf("Couldn't run git status --porcelain\n");
+        return -1;
+    }
+
     line_buffer line;
     bool might_have_something_to_commit = false;
     while (fgets(line, sizeof(line), fp) != NULL)
@@ -195,7 +185,10 @@ message_writing_part:
     }
 
 cleanup:
-    pclose(fp);
+    if (fp)
+    {
+        pclose(fp);
+    }
     printf("\n");
     return 0;
 }

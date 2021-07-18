@@ -1,6 +1,8 @@
 IF NOT EXIST build mkdir build
-set FLAGS=-Werror -Wall -Os -s -ffunction-sections -fdata-sections -Wl,--gc-sections -fno-unwind-tables -fno-asynchronous-unwind-tables -fno-math-errno -fno-ident -Wl,--build-id=none
-call gcc branch.c %FLAGS% -o build/branch.exe          &&^
-call gcc commit.c %FLAGS% -o build/commit.exe          &&^
-call gcc gs.c     %FLAGS% -o build/gs.exe              &&^
+call gcc fileargs.c -o build\bootstrap.exe                                    &&^
+call build\bootstrap fileargs_gcc.txt gcc -v branch.c   -o build\branch.exe   &&^
+call build\bootstrap fileargs_gcc.txt gcc -v commit.c   -o build\commit.exe   &&^
+call build\bootstrap fileargs_gcc.txt gcc -v gs.c       -o build\gs.exe       &&^
+call build\bootstrap fileargs_gcc.txt gcc -v fileargs.c -o build\fileargs.exe &&^
+del build\bootstrap.exe &&^
 echo Done.
