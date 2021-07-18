@@ -3,6 +3,7 @@
 
 #include <ctype.h>
 #include <string.h>
+#include <stdio.h>
 
 #define MAX_LINE_SIZE 2048
 
@@ -21,6 +22,31 @@ static inline void trim_trailing_whitespace(char *string)
         {
             break;
         }
+    }
+}
+
+static inline int head(char *command, int max_n_lines)
+{
+    FILE *fp = popen(command, "r");
+    if (fp)
+    {
+        long int n_lines = 0;
+        line_buffer line = {};
+        while (fgets(line, sizeof(line), fp))
+        {
+            printf(line);
+            n_lines++;
+            if (n_lines >= max_n_lines)
+            {
+                break;
+            }
+        }
+        return 0;
+    }
+    else
+    {
+        printf("Couldn't run '%s'\n", command);
+        return -1;
     }
 }
 
