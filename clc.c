@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <inttypes.h>
 #include <math.h>
 
 #include "shell_utils.h"
@@ -177,10 +178,9 @@ static token_list tokenize(line_buffer expression)
         char c = expression[i];
 
         // Initialize token type
-        token_type cur_token_type = NONE;
 
         // Is the current character an operator, and if so what is it?
-        token_type cur_token_type = operator_token_type();
+        token_type cur_token_type = operator_token_type(c);
         bool have_operator = cur_token_type != NONE;
 
         // Valid non-numeric characters are operators and terminators
@@ -259,16 +259,6 @@ static void token_discard(token_list *tl)
     memset(tl->tokens + tl->length - 1, 0, sizeof(token));
 
     tl->length--;
-}
-
-// Returns a copy of the token at the tip of the list, then discards that token
-static token token_pop(token_list *tl)
-{
-    token *out_p = token_peek(tl);
-    ensure(out_p, "Pop from empty token list");
-    token out = *out_p;
-    token_discard(tl);
-    return out;
 }
 
 // Converts from infix to postfix
@@ -391,6 +381,7 @@ static eval_mode get_eval_mode_for_token(token *t)
     switch (t->type)
     {
         case NUMBER:
+        {
             char *string = t->string;
             if ((string[0] == '0') && ((string[1] == 'x') || (string[1] == 'b')))
             {
@@ -410,6 +401,7 @@ static eval_mode get_eval_mode_for_token(token *t)
                     string++;
                 }
             }
+        }
             break;
         case AND:
         case OR:
@@ -713,7 +705,7 @@ int main(int argc, char **argv)
         // Display
         if (hex)
         {
-            printf("0x%llx\n", result);
+            printf("0x%" PRId64 "\n", result);
         }
         else if (bin)
         {
@@ -721,7 +713,7 @@ int main(int argc, char **argv)
         }
         else
         {
-            printf("%lld\n", result);
+            printf("%" PRId64 "\n", result);
         }
     }
     else

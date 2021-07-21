@@ -45,20 +45,20 @@ int main(int argc, char **argv)
                 breaking_point = n - 1;
             }
             strncpy(out, lb + cursor, breaking_point);
-            printf(out);
+            printf("%s", out);
             if (force_break)
             {
                 printf("-");
             }
-            printf("\n");
+            printf("%s", "\n");
             cursor += breaking_point;
             while (lb[cursor] == ' ')
             {
                 cursor++;
             }
         }
-        printf(lb + cursor);
-        printf("\n");
+        printf("%s", lb + cursor);
+        printf("%s", "\n");
     }
     return 0;
 }
