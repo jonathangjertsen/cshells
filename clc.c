@@ -641,7 +641,7 @@ void print_double(double result)
             break;
         }
     }
-    printf(result_txt);
+    printf("%s\n", result_txt);
 }
 
 int main(int argc, char **argv)
