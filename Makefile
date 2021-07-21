@@ -20,10 +20,11 @@ all: \
 	build listfiles
 
 build/bootstrap: fileargs.c
+	mkdir -p build
 	gcc fileargs.c -o $@
 
 build/fileargs: build/bootstrap fileargs.c shell_utils.h
-	$(compile) fileargs.c -o $@
+	build/bootstrap fileargs_gcc.txt gcc fileargs.c -o $@
 
 build/branch: $(shared) branch.c
 	$(compile) branch.c -o $@

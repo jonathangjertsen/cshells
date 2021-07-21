@@ -1,0 +1,22 @@
+name: build
+on: [push]
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v2
+      - name: Set up GCC
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: latest
+          platform: x64
+      - name: build
+        run: |
+          make
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: binaries_linux
+          path: |
+            build
