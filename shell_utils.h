@@ -3,7 +3,9 @@
 
 #include <ctype.h>
 #include <string.h>
+#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define MAX_LINE_SIZE 2048
 
@@ -11,6 +13,15 @@
 #define ARRAY_SIZE(x) (sizeof(x)/MEMBER_SIZE(x))
 
 typedef char line_buffer[MAX_LINE_SIZE];
+
+void ensure(bool condition, char *message)
+{
+    if (!condition)
+    {
+        printf("Error: %s\n", message);
+        exit(1);
+    }
+}
 
 static inline void trim_trailing_whitespace(char *string)
 {
@@ -37,6 +48,7 @@ static inline int head(char *command, int max_n_lines)
         line_buffer line = {};
         while (fgets(line, sizeof(line), fp))
         {
+            trim_trailing_whitespace(line);
             puts(line);
             n_lines++;
             if (n_lines >= max_n_lines)
@@ -51,6 +63,14 @@ static inline int head(char *command, int max_n_lines)
         printf("Couldn't run '%s'\n", command);
         return -1;
     }
+}
+
+static inline void concatenate(line_buffer lb, char *string)
+{
+    int string_len = strlen(string);
+    int curr_len = strlen(lb);
+    ensure(string_len + curr_len <= sizeof(line_buffer), "Line buffer size exceeded");
+    strcat(lb, string);
 }
 
 static inline void add_arg(char *args, char *new_arg)

@@ -34,7 +34,7 @@ void proc_update_item(proc_t *proc, line_buffer item, int item_len, int column)
     switch (column)
     {
         case COLNO_NAME:
-            strncpy(proc->name, item, sizeof(proc->name));
+            strncpy(proc->name, item, sizeof(proc->name)-1);
             break;
         case COLNO_PID:
             proc->pid = strtol(item, 0, 10);
