@@ -16,7 +16,6 @@ all: \
 	build/linewrap \
 	build/lineno \
 	build lorem \
-	build runifnewer \
 	build listfiles
 
 build/bootstrap: fileargs.c
@@ -64,9 +63,6 @@ build/lorem: $(shared) lorem.c
 
 build/lineno: $(shared) lineno.c
 	$(compile) lineno.c -o $@
-
-build/runifnewer: $(shared) runifnewer.c
-	$(compile) runifnewer.c -o $@
 
 build/listfiles: $(shared) listfiles.c
 	$(compile) listfiles.c -o $@

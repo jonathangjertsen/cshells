@@ -3,20 +3,19 @@ IF NOT EXIST build mkdir build
 call gcc fileargs.c -o build\bootstrap.exe
 call build\bootstrap fileargs_gcc.txt gcc fileargs.c -o build\fileargs.exe
 del build\bootstrap.exe
-call build\fileargs fileargs_gcc.txt gcc runifnewer.c -o build\runifnewer.exe
-call build\runifnewer branch.c      build\branch.exe    build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer commit.c      build\commit.exe    build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer gs.c          build\gs.exe        build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer hist.c        build\hist.exe      build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer log.c         build\log.exe       build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer ref.c         build\ref.exe       build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer nav.c         build\nav.exe       build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer proclist.c    build\proclist.exe  build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer linetail.c    build\linetail.exe  build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer linewrap.c    build\linewrap.exe  build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer lorem.c       build\lorem.exe     build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer lineno.c      build\lineno.exe    build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
-call build\runifnewer listfiles.c   build\listfiles.exe build\fileargs fileargs_gcc.txt gcc [SRC] -o [DEST]
+call build\fileargs fileargs_gcc.txt gcc branch.c      -o build\branch.exe
+call build\fileargs fileargs_gcc.txt gcc commit.c      -o build\commit.exe
+call build\fileargs fileargs_gcc.txt gcc gs.c          -o build\gs.exe
+call build\fileargs fileargs_gcc.txt gcc hist.c        -o build\hist.exe
+call build\fileargs fileargs_gcc.txt gcc log.c         -o build\log.exe
+call build\fileargs fileargs_gcc.txt gcc ref.c         -o build\ref.exe
+call build\fileargs fileargs_gcc.txt gcc nav.c         -o build\nav.exe
+call build\fileargs fileargs_gcc.txt gcc proclist.c    -o build\proclist.exe
+call build\fileargs fileargs_gcc.txt gcc linetail.c    -o build\linetail.exe
+call build\fileargs fileargs_gcc.txt gcc linewrap.c    -o build\linewrap.exe
+call build\fileargs fileargs_gcc.txt gcc lorem.c       -o build\lorem.exe
+call build\fileargs fileargs_gcc.txt gcc lineno.c      -o build\lineno.exe
+call build\fileargs fileargs_gcc.txt gcc listfiles.c   -o build\listfiles.exe
 call cp windows/* build
 call cp build/exec.bat build/e.bat
 call cp linux/* build
