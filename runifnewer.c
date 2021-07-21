@@ -20,7 +20,7 @@
 #define ARGNO_CMD 3
 #define MIN_ARGS 4
 
-const char USAGE[] = "Usage: runifnewer <src> <dest> <command...>\n\n";
+static const char USAGE[] = "Usage: runifnewer <src> <dest> <command...>\n\n";
 
 int main(int argc, char **argv)
 {

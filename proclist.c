@@ -29,7 +29,7 @@ typedef struct {
     int size;
 } program_list_t;
 
-void proc_update_item(proc_t *proc, line_buffer item, int item_len, int column)
+static void proc_update_item(proc_t *proc, line_buffer item, int item_len, int column)
 {
     switch (column)
     {

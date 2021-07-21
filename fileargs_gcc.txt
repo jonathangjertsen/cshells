@@ -2,6 +2,7 @@
 -Wall
 -Wno-error=unused-variable
 -Wno-error=unused-but-set-variable
+-Wno-stringop-truncation
 -Wno-unused-result
 -O3
 -s

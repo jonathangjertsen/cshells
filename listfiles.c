@@ -7,7 +7,7 @@
 
 #define OPT_TREEVIEW (1 << 0)
 
-const char BAN_LIST[][sizeof(".pytest_cache")] = {
+static const char BAN_LIST[][sizeof(".pytest_cache")] = {
     ".pytest_cache",
     "node_modules",
     "__pycache__",
@@ -18,7 +18,7 @@ const char BAN_LIST[][sizeof(".pytest_cache")] = {
     ".."
 };
 
-bool is_like_git_cache(const char *name)
+static bool is_like_git_cache(const char *name)
 {
     int name_len = strlen(name);
     if (name_len != 2)
@@ -34,7 +34,7 @@ bool is_like_git_cache(const char *name)
     return ((c0_is_num || c0_is_hexal) && (c1_is_num || c1_is_hexal));
 }
 
-bool iter_dir(const char *dirname, int depth, uint32_t options)
+static bool iter_dir(const char *dirname, int depth, uint32_t options)
 {
     DIR *directory = opendir(dirname);
     if (directory)

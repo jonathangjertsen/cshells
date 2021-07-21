@@ -10,7 +10,7 @@
 #define ARGNO_EXRA 3
 #define MIN_ARGS 3
 
-const char USAGE[] = "Usage: fileargs <argfile> <command> [<extra_args>] [--after] [-v,--verbose]\n\n";
+static const char USAGE[] = "Usage: fileargs <argfile> <command> [<extra_args>] [--after] [-v,--verbose]\n\n";
 
 int main(int argc, char **argv)
 {

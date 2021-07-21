@@ -14,7 +14,7 @@
 
 typedef char line_buffer[MAX_LINE_SIZE];
 
-void ensure(bool condition, char *message)
+static inline void ensure(bool condition, char *message)
 {
     if (!condition)
     {

@@ -2,9 +2,9 @@
 
 #include "shell_utils.h"
 
-const char BREAKING_POINTS[] = ".,-:; \t";
+static const char BREAKING_POINTS[] = ".,-:; \t";
 
-bool is_breaking_point(char c)
+static bool is_breaking_point(char c)
 {
     for (int j = 0; j < ARRAY_SIZE(BREAKING_POINTS); j++)
     {

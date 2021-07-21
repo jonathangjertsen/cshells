@@ -9,7 +9,7 @@
 
 #define CHAR2(A, B) (A | ((uint16_t)B) << 8)
 
-void diff(char *filename)
+static void diff(char *filename)
 {
     printf(
         "git diff:\n"
@@ -31,7 +31,7 @@ void diff(char *filename)
     );
 }
 
-void make_message(void)
+static void make_message(void)
 {
     printf(
         "git status:\n"

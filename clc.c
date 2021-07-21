@@ -36,43 +36,11 @@ typedef enum {
     EOE // Sets max size of array
 } token_type;
 
-int PRECEDENCE[] = {
-    [LPAREN] = 50,
-    [RPAREN] = 50,
-    [MODULO] = 40,
-    [DIVIDED_BY] = 40,
-    [TIMES] = 40,
-    [MINUS] = 30,
-    [PLUS] = 30,
-    [AND] = 20,
-    [XOR] = 10,
-    [OR] = 0,
-    [EOE] = 0
-};
-
-char TOKEN_REPRS[] = {
-    [NONE] = '?',
-    [NUMBER] = 'N',
-    [LPAREN] = '(',
-    [RPAREN] = ')',
-    [PLUS] = '+',
-    [MINUS] = '-',
-    [TIMES] = '*',
-    [DIVIDED_BY] = '/',
-    [MODULO] = '%',
-    [AND] = '&',
-    [XOR] = '^',
-    [OR] = '|',
-    [EOE] = '!'
-};
-
 typedef enum {
     INTEGER,
     FLOATING,
     UNKNOWN
 } eval_mode;
-
-char NUMERIC_CHARS[] = "0123456789abcdefx.";
 
 typedef struct {
     token_type type;
@@ -90,9 +58,41 @@ typedef struct result_t {
     int64_t fixedpoint;
 } result_t;
 
+static const int PRECEDENCE[] = {
+    [LPAREN] = 50,
+    [RPAREN] = 50,
+    [MODULO] = 40,
+    [DIVIDED_BY] = 40,
+    [TIMES] = 40,
+    [MINUS] = 30,
+    [PLUS] = 30,
+    [AND] = 20,
+    [XOR] = 10,
+    [OR] = 0,
+    [EOE] = 0
+};
+
+static const char TOKEN_REPRS[] = {
+    [NONE] = '?',
+    [NUMBER] = 'N',
+    [LPAREN] = '(',
+    [RPAREN] = ')',
+    [PLUS] = '+',
+    [MINUS] = '-',
+    [TIMES] = '*',
+    [DIVIDED_BY] = '/',
+    [MODULO] = '%',
+    [AND] = '&',
+    [XOR] = '^',
+    [OR] = '|',
+    [EOE] = '!'
+};
+
+static const char NUMERIC_CHARS[] = "0123456789abcdefx.";
+
 ////// Debug
 
-void dump(token_list *tl)
+static void dump(token_list *tl)
 {
     for (int i = 0; i < tl->length; i++)
     {
@@ -103,7 +103,7 @@ void dump(token_list *tl)
 
 ////// Tokenizer
 
-void token_push(token_list *tl, token *t)
+static void token_push(token_list *tl, token *t)
 {
     ensure(tl->length < MAX_N_TOKENS, "Too many tokens");
     int prev_length = tl->length;
@@ -111,7 +111,7 @@ void token_push(token_list *tl, token *t)
     tl->length++;
 }
 
-void token_create_and_push(token_list *tl, token_type type, const char *name, int name_length)
+static void token_create_and_push(token_list *tl, token_type type, const char *name, int name_length)
 {
     ensure(tl->length < MAX_N_TOKENS, "Too many tokens");
     token t = {};
@@ -120,7 +120,7 @@ void token_create_and_push(token_list *tl, token_type type, const char *name, in
     token_push(tl, &t);
 }
 
-token_list tokenize(line_buffer expression)
+static token_list tokenize(line_buffer expression)
 {
     token_list tl = {};
     int expr_length = strlen(expression) + 1;
@@ -191,7 +191,7 @@ token_list tokenize(line_buffer expression)
 
 /////// Shunting yard algorithm
 
-token *token_peek(token_list *tl)
+static token *token_peek(token_list *tl)
 {
     if (tl->length > 0)
     {
@@ -203,14 +203,14 @@ token *token_peek(token_list *tl)
     }
 }
 
-void token_discard(token_list *tl)
+static void token_discard(token_list *tl)
 {
     ensure(tl->length > 0, "Discard from empty token list");
     memset(tl->tokens + tl->length - 1, 0, sizeof(token));
     tl->length--;
 }
 
-token token_pop(token_list *tl)
+static token token_pop(token_list *tl)
 {
     token *out_p = token_peek(tl);
     ensure(out_p, "Pop from empty token list");
@@ -219,7 +219,7 @@ token token_pop(token_list *tl)
     return out;
 }
 
-token_list infix_to_postfix(token_list *input)
+static token_list infix_to_postfix(token_list *input)
 {
     token_list output = {};
     token_list operators = {};
@@ -298,7 +298,7 @@ token_list infix_to_postfix(token_list *input)
 
 ////// Evaluation mode
 
-eval_mode get_eval_mode_for_token(token *t)
+static eval_mode get_eval_mode_for_token(token *t)
 {
     eval_mode result = UNKNOWN;
     switch (t->type)
@@ -336,7 +336,7 @@ eval_mode get_eval_mode_for_token(token *t)
     return result;
 }
 
-eval_mode get_eval_mode(token_list *input, eval_mode initial)
+static eval_mode get_eval_mode(token_list *input, eval_mode initial)
 {
     eval_mode result = initial;
     for (int i = 0; i < input->length; i++)
@@ -356,7 +356,7 @@ eval_mode get_eval_mode(token_list *input, eval_mode initial)
 
 // Evaluation for integers
 
-int64_t eval_postfix(token_list *input)
+static int64_t eval_postfix(token_list *input)
 {
     int64_t stack[MAX_N_TOKENS] = {};
     int stack_size = 0;
@@ -420,7 +420,7 @@ int64_t eval_postfix(token_list *input)
 
 // Evaluation for doubles
 
-double eval_postfix_double(token_list *input)
+static double eval_postfix_double(token_list *input)
 {
     double stack[MAX_N_TOKENS] = {};
     int stack_size = 0;
