@@ -9,6 +9,7 @@
 
 #define CHAR2(A, B) (A | ((uint16_t)B) << 8)
 
+// Run git diff
 static void diff(char *filename)
 {
     printf(
@@ -31,6 +32,7 @@ static void diff(char *filename)
     );
 }
 
+// Get a message and commit with it
 static void make_message(void)
 {
     printf(
@@ -63,6 +65,7 @@ static void make_message(void)
 
 int main(int argc, char **argv)
 {
+    // git status --porcelain has info on which files are changed
     FILE *fp = popen("git status --porcelain", "r");
     if (!fp)
     {
@@ -70,6 +73,7 @@ int main(int argc, char **argv)
         return -1;
     }
 
+    // Look through all the lines in the output
     line_buffer line;
     bool might_have_something_to_commit = false;
     while (fgets(line, sizeof(line), fp) != NULL)
@@ -127,6 +131,7 @@ int main(int argc, char **argv)
                 case 'a':
                 case 'A':
                 {
+                    // Add the file
                     line_buffer command = {};
                     snprintf(command, sizeof(command), "git add %s", filename);
                     if (system(command))
@@ -139,6 +144,7 @@ int main(int argc, char **argv)
                 case 'p':
                 case 'P':
                 {
+                    // Add the file using patch
                     line_buffer command = {};
                     snprintf(command, sizeof(command), "git add --patch %s", filename);
                     if (system(command))
@@ -151,22 +157,26 @@ int main(int argc, char **argv)
                 case 'd':
                 case 'D':
                 {
+                    // Show a diff of the file
                     diff(filename);
-                    handled = false;
                 }
                     break;
                 case 'm':
                 case 'M':
+                    // Skip remaining files, go to writing the message
                     goto message_writing_part;
                 case 's':
                 case 'S':
+                    // SKip this file
                     handled = true;
                     break;
                 case 't':
                 case 'T':
+                    // Skip everything
                     goto cleanup;
                     break;
                 default:
+                    // Unhandled
                     printf("I don't understand %s\n", user_input);
                     break;
             }
