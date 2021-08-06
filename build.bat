@@ -4,6 +4,7 @@ call gcc fileargs.c -o build\bootstrap.exe
 call build\bootstrap fileargs_gcc.txt gcc fileargs.c -o build\fileargs.exe
 del build\bootstrap.exe
 call build\fileargs fileargs_gcc.txt gcc branch.c      -o build\branch.exe
+call build\fileargs fileargs_gcc.txt gcc win2wsl.c     -o build\win2wsl.exe
 call build\fileargs fileargs_gcc.txt gcc clc.c         -o build\clc.exe
 call build\fileargs fileargs_gcc.txt gcc commit.c      -o build\commit.exe
 call build\fileargs fileargs_gcc.txt gcc gs.c          -o build\gs.exe
