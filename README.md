@@ -2,7 +2,14 @@
 
 Just for fun and to see how easy it is to use C as a scripting language.
 
-## List
+## How to build
+
+On Windows, get the gcc toolchain from [winlibs.com][winlibs.com] and make sure `gcc` is in the PATH.
+Check that `gcc --version` is 11 or later, since the source uses some recent features.
+Then run `build.bat`.
+Add the `build` directory to PATH to use the utilities that were just built.
+
+## List of utilities
 
 ### `branch`
 
@@ -112,3 +119,5 @@ Prints up to `n` lines from the git ref log
 
 Usage: `ref <n>`
 
+
+[winlibs.com]: https://winlibs.com/
