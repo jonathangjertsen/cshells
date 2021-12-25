@@ -2,6 +2,7 @@
 -Wall
 -Wno-error=unused-variable
 -Wno-error=unused-but-set-variable
+-Wno-format-truncation
 -Wno-unused-function
 -Wno-stringop-truncation
 -Wno-format-security
