@@ -15,8 +15,8 @@ all: \
 	build/linetail \
 	build/linewrap \
 	build/lineno \
-	build lorem \
-	build listfiles
+	build/lorem \
+	build/listfiles
 
 build/bootstrap: fileargs.c
 	mkdir -p build
