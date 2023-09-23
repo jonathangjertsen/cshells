@@ -15,7 +15,7 @@ all: \
 	build/linewrap \
 	build/lineno \
 	build/lorem \
-	build/listfiles
+	build/s
 
 build/bootstrap: fileargs.c
 	mkdir -p build
@@ -60,6 +60,6 @@ build/lorem: $(shared) lorem.c
 build/lineno: $(shared) lineno.c
 	$(compile) lineno.c -o $@
 
-build/listfiles: $(shared) listfiles.c
-	$(compile) listfiles.c -o $@
+build/s: $(shared) l.c
+	$(compile) l.c -o $@
 

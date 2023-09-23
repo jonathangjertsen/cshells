@@ -17,7 +17,7 @@ build/fileargs fileargs_gcc.txt gcc linewrap.c   -o build/linewrap
 build/fileargs fileargs_gcc.txt gcc lorem.c      -o build/lorem
 build/fileargs fileargs_gcc.txt gcc lineno.c     -o build/lineno
 build/fileargs fileargs_gcc.txt gcc runifnewer.c -o build/runifnewer
-build/fileargs fileargs_gcc.txt gcc listfiles.c  -o build/listfiles
+build/fileargs fileargs_gcc.txt gcc l.c          -o build/l
 cp windows/* build
 cp build/exec.bat build/e.bat
 cp linux/* build

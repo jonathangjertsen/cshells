@@ -16,7 +16,7 @@ call build\fileargs fileargs_gcc.txt gcc linetail.c    -o build\linetail.exe
 call build\fileargs fileargs_gcc.txt gcc linewrap.c    -o build\linewrap.exe
 call build\fileargs fileargs_gcc.txt gcc lorem.c       -o build\lorem.exe
 call build\fileargs fileargs_gcc.txt gcc lineno.c      -o build\lineno.exe
-call build\fileargs fileargs_gcc.txt gcc listfiles.c   -o build\listfiles.exe
+call build\fileargs fileargs_gcc.txt gcc l.c           -o build\l.exe
 call cp windows/* build
 call cp build/exec.bat build/e.bat
 call cp linux/* build
