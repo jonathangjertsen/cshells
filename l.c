@@ -6,6 +6,7 @@
 #include "shell_utils.h"
 
 #define OPT_TREEVIEW (1 << 0)
+#define OPT_RECURSE  (1 << 1)
 
 static const char BAN_LIST[][sizeof(".pytest_cache")] = {
     ".pytest_cache",
@@ -78,7 +79,10 @@ static bool iter_dir(const char *dirname, int depth, uint32_t options)
                 strcpy(shown_name, full_name);
             }
             printf("%s\n", shown_name);
-            iter_dir(full_name, depth + 1, options);
+            if (options & OPT_RECURSE)
+            {
+                iter_dir(full_name, depth + 1, options);
+            }
         }
         closedir(directory);
         return true;
@@ -121,9 +125,14 @@ int main(int argc, char **argv)
             dir_or_file = argv[i];
         }
 
-        if (strcmp(argv[i], "--tree") == 0)
+        if ((strcmp(argv[i], "-t") == 0) || (strcmp(argv[i], "--tree") == 0))
         {
-            options |= OPT_TREEVIEW;
+            options |= OPT_TREEVIEW | OPT_RECURSE;
+        }
+
+        if ((strcmp(argv[i], "-R") == 0) || (strcmp(argv[i], "-r") == 0))
+        {
+            options |= OPT_RECURSE;
         }
     }
 
