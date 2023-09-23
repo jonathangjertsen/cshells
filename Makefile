@@ -5,7 +5,6 @@ compile = build/fileargs fileargs_gcc.txt gcc
 all: \
 	build/fileargs \
 	build/branch \
-	build/clc \
 	build/commit \
 	build/hist \
 	build/log \
@@ -27,9 +26,6 @@ build/fileargs: build/bootstrap fileargs.c shell_utils.h
 
 build/branch: $(shared) branch.c
 	$(compile) branch.c -o $@
-
-build/clc: $(shared) clc.c
-	$(compile) clc.c -o $@ -lm
 
 build/commit: $(shared) commit.c
 	$(compile) commit.c -o $@

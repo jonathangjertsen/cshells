@@ -5,7 +5,6 @@ gcc fileargs.c -o build/bootstrap
 build/bootstrap fileargs_gcc.txt gcc fileargs.c  -o build/fileargs
 rm build/bootstrap
 build/fileargs fileargs_gcc.txt gcc branch.c     -o build/branch
-build/fileargs fileargs_gcc.txt gcc clc.c        -o build/clc -lm
 build/fileargs fileargs_gcc.txt gcc commit.c     -o build/commit
 build/fileargs fileargs_gcc.txt gcc gs.c         -o build/gs
 build/fileargs fileargs_gcc.txt gcc hist.c       -o build/hist

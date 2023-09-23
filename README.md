@@ -17,15 +17,6 @@ Shows the current git branch.
 
 Usage: `branch`
 
-### `clc`
-
-Evaluates and prints the expression.
-
-Supported operators: + - * / % & | ^ ( )
-Supported number formats: decimal, hex, binary, octal, float
-
-Usage: `clc <expression>`
-
 ### `commit`
 
 Interactive git add and commit helper
